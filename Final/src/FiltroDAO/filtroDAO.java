@@ -20,11 +20,11 @@ import java.util.ArrayList;
  */
 public class filtroDAO implements metodos<alumno> {
 
-    private static final String SQL_INSERT = " INSERT INTO alumno(id,carnet,nombres,apellidos,edad,universidad,estado) VALUES (?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE alumno SET carnet=?,nombres=?,apellidos=?,edad=?,universidad=?,estado=? WHERE id=?";
-    private static final String SQL_DELETE = "DELETE FROM alumno WHERE id=?";
-    private static final String SQL_READ = "SELECT * FROM alumno WHERE id=?";
-    private static final String SQL_READALL = "SELECT * FROM alumno";
+    private static final String SQL_INSERT = " INSERT INTO alumnos(id,carnet,nombres,apellidos,edad,universidad,estado) VALUES (?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE alumnos SET carnet=?,nombres=?,apellidos=?,edad=?,universidad=?,estado=? WHERE id=?";
+    private static final String SQL_DELETE = "DELETE FROM alumnos WHERE id=?";
+    private static final String SQL_READ = "SELECT * FROM alumnos WHERE id=?";
+    private static final String SQL_READALL = "SELECT * FROM alumnos";
     private static final Conexion con = Conexion.conectar();
 
     @Override

@@ -5,6 +5,8 @@
  */
 package pkgfinal;
 
+import ventana.ventana;
+
 /**
  *
  * @author LN710Q
@@ -15,7 +17,8 @@ public class Final {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        new ventana().setVisible(true);
+       
     }
     
 }

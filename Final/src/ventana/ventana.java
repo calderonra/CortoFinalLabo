@@ -42,8 +42,8 @@ public class ventana extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         agregarLabels();
-        //formulario();
-        //llenarTabla();
+        formulario();
+        llenarTabla();
         Container container = getContentPane();
         container.add(lblcarnet);
         container.add(lblNombres);
@@ -62,7 +62,7 @@ public class ventana extends JFrame {
         container.add(table);
         container.add(eliminar);
         setSize(800, 600);
-        //eventos();
+        eventos();
 
     }
 
@@ -73,8 +73,8 @@ public class ventana extends JFrame {
         lblUniversidad = new JLabel("Universidad");
         lblEdad = new JLabel("Edad");
         lblcarnet.setBounds(10, 10, ANCHOC, ALTOC);
-        lblNombres.setBounds(10, 60, WIDTH, HEIGHT);
-        lblApellidos.setBounds(60, 60, ANCHOC, ALTOC);
+        lblNombres.setBounds(5, 60, ANCHOC, ALTOC);
+        lblApellidos.setBounds(500, 60, ANCHOC, ALTOC);
         lblEdad.setBounds(10, 100, ANCHOC, ALTOC);
         lblUniversidad.setBounds(10, 140, ANCHOC, ALTOC);
     }
@@ -104,7 +104,7 @@ public class ventana extends JFrame {
         estado.add(no);
         carnet.setBounds(140, 10, ANCHOC, ALTOC);
         nombre.setBounds(140, 60, ANCHOC, ALTOC);
-        apellidos.setBounds(140, 100, ANCHOC, ALTOC);
+        apellidos.setBounds(555, 60, ANCHOC, ALTOC);
         si.setBounds(140, 140, 50, ALTOC);
         no.setBounds(210, 140, 50, ALTOC);
         buscar.setBounds(300, 10, ANCHOC, ALTOC);
@@ -113,11 +113,12 @@ public class ventana extends JFrame {
         eliminar.setBounds(300, 210, ANCHOC, ALTOC);
         limpiar.setBounds(450, 210, ANCHOC, ALTOC);
         resultados = new JTable();
-        table.setBounds(10, 250, 500, 200);
+        table.setBounds(10, 300, 500, 200);
         table.add(new JScrollPane(resultados));
 
     }
-       public void llenarTabla() {
+
+    public void llenarTabla() {
         tm = new DefaultTableModel() {
             public Class<?> getColumnClass(int column) {
                 switch (column) {
@@ -127,26 +128,118 @@ public class ventana extends JFrame {
                         return String.class;
                     case 2:
                         return String.class;
+                    case 3:
+                        return String.class;
                     default:
                         return Boolean.class;
                 }
             }
         };
-        tm.addColumn("Codigo");
-        tm.addColumn("Marca");
-        tm.addColumn("Stock");
-        tm.addColumn("Stock en Sucursal");
+        tm.addColumn("Carnet");
+        tm.addColumn("Nombre");
+        tm.addColumn("apellidos");
+        tm.addColumn("Universidad");
+        tm.addColumn("estado");
         filtroDAO fd = new filtroDAO();
         ArrayList<alumno> alumnos = fd.readAll();
         for (alumno i : alumnos) {
-            tm.addRow(new Object[]{i.getCodigo(), fi.getMarca(), fi.getStock()});
+            tm.addRow(new Object[]{i.getCarnet(), i.getNombre(), i.getApellidos(), i.getUniversidad()});
         }
-        
+
         resultados.setModel(tm);
-        
+
     }
 
+    public void eventos() {
+        insertar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                filtroDAO fd = new filtroDAO();
+                alumno a = new alumno(Integer.parseInt(carnet.getText()), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
 
+                if (no.isSelected()) {
+                    a.setEstado(false);
+                }
+                if (fd.create(a)) {
+                    JOptionPane.showMessageDialog(null, "alumno agregado con exito");
+                                     limpiarCampos();
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
+                }
+            }
+
+        });
+
+        actualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filtroDAO fd = new filtroDAO();
+                alumno a = new alumno(Integer.parseInt(carnet.getText()), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
+
+                if (no.isSelected()) {
+                    a.setEstado(false);
+                }
+                if (fd.create(a)) {
+                    JOptionPane.showMessageDialog(null, "alumno agregado con exito");
+                                      limpiarCampos();
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
+                }
+            }
+
+        });
+         eliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filtroDAO fd = new filtroDAO();
+                if (fd.delete(carnet.getText())) {
+                    JOptionPane.showMessageDialog(null, "alumno eliminado");
+                    limpiarCampos();
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
+                }
+            }
+            
+        });
+     buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                filtroDAO fd = new filtroDAO();
+                alumno f = fd.read(carnet.getText());
+                if (f == null) {
+                    JOptionPane.showMessageDialog(null, "El alumno que busca no se ha encontrdo");
+                } else {
+                    carnet.setText(Integer.toString(f.getCarnet()));
+                    Universidad.setSelectedItem(f.getUniversidad());
+                    nombre.setText((f.getNombre()));
+                    apellidos.setText(f.getApellidos());
+                    edad.setText(Integer.toString(f.getEdad()));
+                    if (f.isEstado()) {
+                        si.setSelected(true);
+                    } else {
+                        no.setSelected(true);
+                    }
+                }
+            }
+            
+        });
+     limpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                limpiarCampos();
+            }
+            
+        });
+    }
+   public void limpiarCampos() {
+        carnet.setText("");
+        Universidad.setSelectedItem("UCA");
+        nombre.setText("");
+        apellidos.setText("");
+    }
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
