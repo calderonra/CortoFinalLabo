@@ -49,6 +49,7 @@ public class ventana extends JFrame {
         container.add(lblNombres);
         container.add(lblApellidos);
         container.add(lblUniversidad);
+        container.add(lblEdad);
         container.add(carnet);
         container.add(nombre);
         container.add(apellidos);
@@ -61,6 +62,7 @@ public class ventana extends JFrame {
         container.add(limpiar);
         container.add(table);
         container.add(eliminar);
+        container.add(Universidad);
         setSize(800, 600);
         eventos();
 
@@ -75,8 +77,8 @@ public class ventana extends JFrame {
         lblcarnet.setBounds(10, 10, ANCHOC, ALTOC);
         lblNombres.setBounds(5, 60, ANCHOC, ALTOC);
         lblApellidos.setBounds(500, 60, ANCHOC, ALTOC);
-        lblEdad.setBounds(10, 100, ANCHOC, ALTOC);
-        lblUniversidad.setBounds(10, 140, ANCHOC, ALTOC);
+        lblEdad.setBounds(10, 90, ANCHOC, ALTOC);
+        lblUniversidad.setBounds(10, 120, ANCHOC, ALTOC);
     }
 
     public final void formulario() {
@@ -104,9 +106,11 @@ public class ventana extends JFrame {
         estado.add(no);
         carnet.setBounds(140, 10, ANCHOC, ALTOC);
         nombre.setBounds(140, 60, ANCHOC, ALTOC);
+        edad.setBounds(140,90,ANCHOC, ALTOC);
+        Universidad.setBounds(140,130,ANCHOC, ALTOC);
         apellidos.setBounds(555, 60, ANCHOC, ALTOC);
-        si.setBounds(140, 140, 50, ALTOC);
-        no.setBounds(210, 140, 50, ALTOC);
+        si.setBounds(140, 160, 50, ALTOC);
+        no.setBounds(210, 160, 50, ALTOC);
         buscar.setBounds(300, 10, ANCHOC, ALTOC);
         insertar.setBounds(10, 210, ANCHOC, ALTOC);
         actualizar.setBounds(150, 210, ANCHOC, ALTOC);
