@@ -42,6 +42,10 @@ public class alumno {
         this.estado = estado;
     }
 
+    public alumno(int aInt, int aInt0, int aInt1, String string, String string0, int aInt2, String string1, boolean aBoolean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getUniversidad() {
         return universidad;
     }

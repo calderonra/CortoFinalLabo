@@ -9,7 +9,9 @@ import Modelo.alumno;
 import conexion.Conexion;
 import interfaz.metodos;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -72,19 +74,19 @@ public class filtroDAO implements metodos<alumno> {
         PreparedStatement ps;
         try {
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setInt(1, c.getId());
-            ps.setInt(2, c.getCarnet());
-            ps.setString(3, c.getNombre());
-            ps.setString(4, c.getApellidos());
-            ps.setInt(5, c.getEdad());
-            ps.setString(6, c.getUniversidad());
-            ps.setBoolean(7, true);
+            ps.setInt(1, c.getCarnet());
+            ps.setString(2, c.getNombre());
+            ps.setString(3, c.getApellidos());
+            ps.setInt(4, c.getEdad());
+            ps.setString(5, c.getUniversidad());
+            ps.setBoolean(6, c.isEstado());
+            ps.setInt(7, c.getCarnet());
             if (ps.executeUpdate() > 0) {
                 return true;
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("no furulo");
+            System.out.println("no furulo update");
         } finally {
             con.cerrarConexion();
         }
@@ -93,12 +95,48 @@ public class filtroDAO implements metodos<alumno> {
 
     @Override
     public alumno read(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        alumno a = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = con.getCnx().prepareStatement(SQL_READ);
+            ps.setString(1, key.toString());
+            
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                a = new alumno(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getBoolean(8));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+           
+        } finally{
+            con.cerrarConexion();
+        }
+        return a;
     }
 
     @Override
     public ArrayList<alumno> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       ArrayList<alumno> all = new ArrayList();
+        Statement s;
+        ResultSet rs;
+         try{
+           s=con.getCnx().prepareStatement(SQL_READALL);
+           rs=s.executeQuery(SQL_READALL);
+           while(rs.next()){
+               all.add( new alumno(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getBoolean(8)));
+           }
+            rs.close();
+       }catch(SQLException ex){
+           System.out.println(ex.getMessage());
+           System.out.println("rip read all");
+       }finally{
+           
+           con.cerrarConexion();
+       }
+         return all;
     }
 
 }
