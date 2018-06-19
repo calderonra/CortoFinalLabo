@@ -147,7 +147,7 @@ public class ventana extends JFrame {
         filtroDAO fd = new filtroDAO();
         ArrayList<alumno> alumnos = fd.readAll();
         for (alumno i : alumnos) {
-            tm.addRow(new Object[]{i.getCarnet(), i.getNombre(), i.getApellidos(), i.getUniversidad()});
+            tm.addRow(new Object[]{i.getCarnet(),i.getNombre(), i.getApellidos(), i.getUniversidad()});
         }
 
         resultados.setModel(tm);

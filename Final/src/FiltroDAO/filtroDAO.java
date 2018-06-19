@@ -126,7 +126,7 @@ public class filtroDAO implements metodos<alumno> {
            s=con.getCnx().prepareStatement(SQL_READALL);
            rs=s.executeQuery(SQL_READALL);
            while(rs.next()){
-               all.add( new alumno(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getBoolean(8)));
+               all.add(new alumno(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),rs.getBoolean(6)));
            }
             rs.close();
        }catch(SQLException ex){
