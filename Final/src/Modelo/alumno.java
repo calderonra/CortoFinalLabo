@@ -14,20 +14,42 @@ public class alumno {
     private int carnet;
     private String nombre;
     private String apellidos;
+    private String universidad;
     private int edad;
     private boolean estado;
 
     public alumno() {
     }
 
-    public alumno(int id, int carnet, String nombre, String apellidos, int edad, boolean estado) {
+  
+
+    public alumno(int id, int carnet, String nombre, String apellidos, String universidad, int edad, boolean estado) {
         this.id = id;
         this.carnet = carnet;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.universidad = universidad;
         this.edad = edad;
         this.estado = estado;
     }
+
+    public alumno(int carnet, String nombre, String apellidos, String universidad, int edad, boolean estado) {
+        this.carnet = carnet;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.universidad = universidad;
+        this.edad = edad;
+        this.estado = estado;
+    }
+
+    public String getUniversidad() {
+        return universidad;
+    }
+
+    public void setUniversidad(String universidad) {
+        this.universidad = universidad;
+    }
+
 
     
     public int getId() {
