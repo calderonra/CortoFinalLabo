@@ -224,7 +224,6 @@ public class ventana extends JFrame {
                     JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado.");
                     //JOptionPane.showMessageDialog(null, "Asegurar que el carnet sea de menos de 9 digitos");
                 } else {
-
                     carnet.setText(f.getCarnet());
                     nombre.setText(f.getNombre());
                     apellidos.setText(f.getApellidos());

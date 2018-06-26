@@ -82,21 +82,21 @@ public class filtroDAO implements metodos<alumno> {
             ps.setBoolean(4, c.isEstado());
             ps.setString(5, c.getUniversidad());
             ps.setString(6, c.getCarnet());
-            if(ps.executeUpdate()>0){
+            if (ps.executeUpdate() > 0) {
                 return true;
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(filtroDAO.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(filtroDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             con.cerrarConexion();
         }
-return false;
+        return false;
     }
 
     @Override
     public alumno read(Object key) {
-        alumno a = null;
+        alumno f = null;
         PreparedStatement ps;
         ResultSet rs;
         try {
@@ -106,34 +106,34 @@ return false;
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                a = new alumno(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getBoolean(8));
+                f = new alumno(rs.getInt("id"), rs.getString("carnet"), rs.getString("nombres"), rs.getString("apellidos"), rs.getInt("edad"), rs.getString("universidad"), rs.getBoolean("estado"));
             }
             rs.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-
+            Logger.getLogger(filtroDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             con.cerrarConexion();
         }
-        return a;
+        return f;
     }
 
     @Override
     public ArrayList<alumno> readAll() {
-       ArrayList<alumno> all = new ArrayList();
+        ArrayList<alumno> all = new ArrayList();
         Statement s;
         ResultSet rs;
         try {
             s = con.getCnx().prepareStatement(SQL_READALL);
             rs = s.executeQuery(SQL_READALL);
-            while(rs.next()){
-               
-                all.add(new alumno(rs.getInt("id"),rs.getString("carnet"),rs.getString("nombres"),rs.getString("apellidos"),rs.getInt("edad"),rs.getString("universidad"),rs.getBoolean("estado")));
+            while (rs.next()) {
+
+                all.add(new alumno(rs.getInt("id"), rs.getString("carnet"), rs.getString("nombres"), rs.getString("apellidos"), rs.getInt("edad"), rs.getString("universidad"), rs.getBoolean("estado")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(filtroDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return all;
-}
+    }
 
 }
