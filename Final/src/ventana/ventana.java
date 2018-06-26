@@ -192,7 +192,7 @@ public class ventana extends JFrame {
                     a.setEstado(false);
                 }
                 if (fd.create(a)) {
-                    JOptionPane.showMessageDialog(null, "alumno agregado con exito");
+                    JOptionPane.showMessageDialog(null, "alumno actualizado con exito");
                     limpiarCampos();
                     llenarTabla();
                 } else {
@@ -253,6 +253,7 @@ public class ventana extends JFrame {
         Universidad.setSelectedItem("UCA");
         nombre.setText("");
         apellidos.setText("");
+        edad.setText("");
     }
 
     public static void main(String[] args) {
