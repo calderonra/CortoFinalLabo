@@ -47,7 +47,7 @@ public class Conexion {
         driver="com.mysql.jdbc.Driver";
         url="jdbc:mysql://localhost/inscripciones";
     }
-    
+    //ljhkjhk
     public Connection getCnx(){
         return cnx;
     }
