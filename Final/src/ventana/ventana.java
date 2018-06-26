@@ -106,8 +106,8 @@ public class ventana extends JFrame {
         estado.add(no);
         carnet.setBounds(140, 10, ANCHOC, ALTOC);
         nombre.setBounds(140, 60, ANCHOC, ALTOC);
-        edad.setBounds(140,90,ANCHOC, ALTOC);
-        Universidad.setBounds(140,130,ANCHOC, ALTOC);
+        edad.setBounds(140, 90, ANCHOC, ALTOC);
+        Universidad.setBounds(140, 130, ANCHOC, ALTOC);
         apellidos.setBounds(555, 60, ANCHOC, ALTOC);
         si.setBounds(140, 160, 50, ALTOC);
         no.setBounds(210, 160, 50, ALTOC);
@@ -134,24 +134,29 @@ public class ventana extends JFrame {
                         return String.class;
                     case 3:
                         return String.class;
+                    case 4:
+                        return String.class;
                     default:
                         return Boolean.class;
                 }
             }
         };
+
         tm.addColumn("Carnet");
         tm.addColumn("Nombre");
-        tm.addColumn("apellidos");
+        tm.addColumn("Apellidos");
+        tm.addColumn("Edad");
         tm.addColumn("Universidad");
-        tm.addColumn("estado");
+        tm.addColumn("Estado");
         filtroDAO fd = new filtroDAO();
-        ArrayList<alumno> alumnos = fd.readAll();
-        for (alumno i : alumnos) {
-            tm.addRow(new Object[]{i.getCarnet(),i.getNombre(), i.getApellidos(), i.getUniversidad()});
+        ArrayList<alumno> filtros = fd.readAll();
+
+        for (alumno fi : filtros) {
+            System.out.println(fi.toString());
+            tm.addRow(new Object[]{fi.getCarnet(), fi.getNombre(), fi.getApellidos(), fi.getUniversidad(), fi.getEdad(), fi.isEstado()});
         }
 
         resultados.setModel(tm);
-
     }
 
     public void eventos() {
@@ -159,17 +164,19 @@ public class ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 filtroDAO fd = new filtroDAO();
-                alumno a = new alumno(Integer.parseInt(carnet.getText()), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
+                alumno f = new alumno(carnet.getText(), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
 
                 if (no.isSelected()) {
-                    a.setEstado(false);
+                    f.setEstado(false);
                 }
-                if (fd.create(a)) {
-                    JOptionPane.showMessageDialog(null, "alumno agregado con exito");
-                                     limpiarCampos();
+                if (fd.create(f)) {
+                    JOptionPane.showMessageDialog(null, "Filtro registrado con exito.");
+                    limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
+                    JOptionPane.showMessageDialog(null, "Ocurrió un problema al momento de modificar el filtro.");
+                    JOptionPane.showMessageDialog(null, "Asegurar que el carnet es de menos de 9 dígitos");
+
                 }
             }
 
@@ -179,14 +186,14 @@ public class ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filtroDAO fd = new filtroDAO();
-                alumno a = new alumno(Integer.parseInt(carnet.getText()), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
+                alumno a = new alumno(carnet.getText(), nombre.getText(), apellidos.getText(), Universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
 
                 if (no.isSelected()) {
                     a.setEstado(false);
                 }
                 if (fd.create(a)) {
                     JOptionPane.showMessageDialog(null, "alumno agregado con exito");
-                                      limpiarCampos();
+                    limpiarCampos();
                     llenarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
@@ -194,7 +201,7 @@ public class ventana extends JFrame {
             }
 
         });
-         eliminar.addActionListener(new ActionListener() {
+        eliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filtroDAO fd = new filtroDAO();
@@ -206,21 +213,24 @@ public class ventana extends JFrame {
                     JOptionPane.showMessageDialog(null, "Ocurrio un problema al modificar el alumno");
                 }
             }
-            
+
         });
-     buscar.addActionListener(new ActionListener() {
+        buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 filtroDAO fd = new filtroDAO();
                 alumno f = fd.read(carnet.getText());
                 if (f == null) {
-                    JOptionPane.showMessageDialog(null, "El alumno que busca no se ha encontrdo");
+                    JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado.");
+                    //JOptionPane.showMessageDialog(null, "Asegurar que el carnet sea de menos de 9 digitos");
                 } else {
-                    carnet.setText(Integer.toString(f.getCarnet()));
-                    Universidad.setSelectedItem(f.getUniversidad());
-                    nombre.setText((f.getNombre()));
+
+                    carnet.setText(f.getCarnet());
+                    nombre.setText(f.getNombre());
                     apellidos.setText(f.getApellidos());
                     edad.setText(Integer.toString(f.getEdad()));
+                    Universidad.setSelectedItem(f.getUniversidad());
+
                     if (f.isEstado()) {
                         si.setSelected(true);
                     } else {
@@ -228,22 +238,24 @@ public class ventana extends JFrame {
                     }
                 }
             }
-            
+
         });
-     limpiar.addActionListener(new ActionListener() {
+        limpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 limpiarCampos();
             }
-            
+
         });
     }
-   public void limpiarCampos() {
+
+    public void limpiarCampos() {
         carnet.setText("");
         Universidad.setSelectedItem("UCA");
         nombre.setText("");
         apellidos.setText("");
     }
+
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

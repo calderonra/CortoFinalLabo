@@ -11,7 +11,7 @@ package Modelo;
  */
 public class alumno {
       private int id;
-    private int carnet;
+    private String carnet;
     private String nombre;
     private String apellidos;
     private String universidad;
@@ -23,7 +23,7 @@ public class alumno {
 
   
 
-    public alumno(int id, int carnet, String nombre, String apellidos, String universidad, int edad, boolean estado) {
+    public alumno(int id, String carnet, String nombre, String apellidos, int edad, String universidad, boolean estado) {
         this.id = id;
         this.carnet = carnet;
         this.nombre = nombre;
@@ -33,7 +33,7 @@ public class alumno {
         this.estado = estado;
     }
 
-    public alumno(int carnet, String nombre, String apellidos, String universidad, int edad, boolean estado) {
+    public alumno(String carnet, String nombre, String apellidos, String universidad, int edad, boolean estado) {
         this.carnet = carnet;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -64,13 +64,15 @@ public class alumno {
         this.id = id;
     }
 
-    public int getCarnet() {
+    public String getCarnet() {
         return carnet;
     }
 
-    public void setCarnet(int carnet) {
+    public void setCarnet(String carnet) {
         this.carnet = carnet;
     }
+
+
 
     public String getNombre() {
         return nombre;
