@@ -40,7 +40,7 @@ public class Conexion {
 
         }
     }
-    
+    ////
     private void cargarCredenciales(){
         user="root";
         pass="";
