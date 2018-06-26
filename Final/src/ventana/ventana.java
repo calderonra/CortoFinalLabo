@@ -170,11 +170,11 @@ public class ventana extends JFrame {
                     f.setEstado(false);
                 }
                 if (fd.create(f)) {
-                    JOptionPane.showMessageDialog(null, "Filtro registrado con exito.");
+                    JOptionPane.showMessageDialog(null, "alumno registrado con exito.");
                     limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrió un problema al momento de modificar el filtro.");
+                    JOptionPane.showMessageDialog(null, "Ocurrió un problema al momento de modificar el alumno.");
                     JOptionPane.showMessageDialog(null, "Asegurar que el carnet es de menos de 9 dígitos");
 
                 }
@@ -221,7 +221,7 @@ public class ventana extends JFrame {
                 filtroDAO fd = new filtroDAO();
                 alumno f = fd.read(carnet.getText());
                 if (f == null) {
-                    JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado.");
+                    JOptionPane.showMessageDialog(null, "El alumno buscado no se ha encontrado.");
                     //JOptionPane.showMessageDialog(null, "Asegurar que el carnet sea de menos de 9 digitos");
                 } else {
                     carnet.setText(f.getCarnet());
